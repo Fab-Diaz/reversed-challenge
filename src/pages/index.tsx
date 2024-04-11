@@ -4,40 +4,46 @@ import Issue from "@/types/issues";
 import IssueCard from "@/components/IssueCard";
 import {FormType} from "@/types/form";
 import Form from "@/components/Form";
+import useFetch from "@/hooks/useFetch";
+import {ApiError} from "@/types/errors";
 
 const Home: NextPage = () => {
 
   const [savedForm, setSavedForm] = useState<FormType | null>(null)
   const [issues, setIssues] = useState<Issue[]>([])
-  const [apiError, setApiError] = useState<string>('')
   const [page, setPage] = useState<number>(1)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const { apiError, fetchData } = useFetch();
+
   const getIssues = useCallback(async (form: FormType, clear: boolean = true) => {
     setIsLoading(true)
-    setApiError('')
     if (clear) {
       setIssues([])
     }
-    fetch(`${process.env.apiUrl}/${form.org}/${form.repo}/issues?page=${page}&sort=${form.sort}&per_page=${form.pageSize}`,
-      {headers: {'Authorization': `Bearer ${process.env.apiKey}`}}
-    ).then(async (res) => {
 
-      if (res.status === 404) {
-        setApiError('Issues not found. Try again with another organization or repository.')
-      } else {
-        const newIssues = await res.json()
-
-        setSavedForm(form)
-        setIssues(prevIssues => [...prevIssues, ...newIssues])
+    const errors: ApiError[] = [
+      {
+        status: 404,
+        message: 'Issues not found. Try again with another organization or repository.'
+      },
+      {
+        status: 403,
+        message: 'Request is forbidden. Check that the provided api key is not expired. Contact Fabien for more details ;)'
       }
-    }).catch((e) => {
-      console.error(e)
-      setApiError('Something went wrong. Please try again!')
-    }).finally(() => {
-      setIsLoading(false)
-    })
-  }, [page])
+    ]
+
+    fetchData(`/${form.org}/${form.repo}/issues?page=${page}&sort=${form.sort}&per_page=${form.pageSize}`, errors)
+      .then(async (res) => {
+        if (res) {
+          setSavedForm(form)
+          setIssues(prevIssues => [...prevIssues, ...res])
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [fetchData, page])
 
 
   useEffect(() => {

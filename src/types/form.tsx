@@ -7,8 +7,3 @@ export type FormType = {
   sort: Sort
   pageSize: PageSize
 }
-
-export type FormErrors = {
-  org: string,
-  repo: string,
-}

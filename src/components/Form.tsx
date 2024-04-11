@@ -1,5 +1,6 @@
 import React, {ChangeEvent, FormEvent, useMemo, useState} from "react";
-import {FormErrors, FormType} from "@/types/form";
+import { FormType} from "@/types/form";
+import {FormErrors} from "@/types/errors";
 
 type FormProps = {
   isLoading: boolean
