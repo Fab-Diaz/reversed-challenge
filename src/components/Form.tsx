@@ -70,7 +70,6 @@ const Form: React.FC<FormProps> = React.memo(({isLoading, apiError, onSubmit}) =
         <div className={'w-[150px]'}>
           <p>Page size</p>
           <select name="pageSize" id="pageSize" onChange={handleFormChange} value={form.pageSize} className={'w-full'}>
-            <option value="5">5</option >
             <option value="15">15</option>
             <option value="30">30</option>
             <option value="50">50</option>

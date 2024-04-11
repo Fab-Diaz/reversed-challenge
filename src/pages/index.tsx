@@ -2,8 +2,8 @@ import {NextPage} from "next";
 import {useCallback, useEffect, useState} from "react";
 import Issue from "@/types/issues";
 import {FormType} from "@/types/form";
-import {Form, IssueCard} from "@/components/index";
-import {useFetch} from "@/hooks/index";
+import {Form, IssueCard} from "@/components";
+import {useFetch} from "@/hooks";
 import {ApiError} from "@/types/errors";
 
 const Home: NextPage = () => {

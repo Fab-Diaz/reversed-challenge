@@ -1,0 +1,19 @@
+.title-wrapper {
+    @apply flex space-x-2 items-center
+}
+
+.chip {
+    @apply py-1 px-2 rounded-3xl bg-gray-300 text-black text-sm
+}
+
+.avatar {
+    @apply w-[30px] h-[30px] rounded-3xl
+}
+
+.comment {
+    @apply bg-gray-100 p-2 rounded-md
+}
+
+.sub-content-wrapper {
+    @apply flex justify-between items-center
+}

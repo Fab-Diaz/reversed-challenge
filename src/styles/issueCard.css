@@ -6,30 +6,10 @@
     @apply opacity-100
 }
 
-.title-wrapper {
-    @apply flex space-x-2 items-center
-}
-
 .body {
     @apply my-6
 }
 
 .body.missing {
     @apply text-gray-400 italic
-}
-
-.avatar {
-    @apply w-[30px] h-[30px] rounded-3xl
-}
-
-.comment {
-    @apply bg-gray-100 p-2 rounded-md
-}
-
-.chip {
-    @apply py-1 px-2 rounded-3xl bg-gray-300 text-black text-sm
-}
-
-.sub-content-wrapper {
-    @apply flex justify-between items-center
 }
