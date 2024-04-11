@@ -1,16 +1,17 @@
 import {NextPage} from "next";
-import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import {ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState} from "react";
 import Issue from "@/types/issues";
 import IssueCard from "@/components/IssueCard";
 import {Form, FormErrors} from "@/types/form";
 
 const Home: NextPage = () => {
-  const DEFAULT_FORM: Form = {
+  const DEFAULT_FORM = useMemo(() => ({
     org: '',
     repo: '',
-  }
+  }), [])
 
   const [issues, setIssues] = useState<Issue[]>([])
+  const [page, setPage] = useState<number>(1)
   const [form, setForm] = useState<Form>({
     org: 'vercel',
     repo: 'next.js',
@@ -21,10 +22,11 @@ const Home: NextPage = () => {
   })
   const [isLoading, setIsLoading] = useState<boolean>()
 
-  const getIssues = async () => {
-    setIssues([])
-    setIsLoading(true)
-    fetch(`${process.env.apiUrl}/${form.org}/${form.repo}/issues?page=1`,
+  const getIssues = useCallback(async (clear?: boolean) => {
+    if (clear) {
+      setIssues([])
+    }
+    fetch(`${process.env.apiUrl}/${form.org}/${form.repo}/issues?page=${page}`,
       {headers: {'Authorization': `Bearer ${process.env.apiKey}`}}
     ).then(async (res) => {
 
@@ -40,7 +42,6 @@ const Home: NextPage = () => {
         setIssues(prevIssues => [...prevIssues, ...newIssues])
       }
     }).catch((e) => {
-      console.error(e)
       setErrors({
         ...DEFAULT_FORM,
         api: 'Something went wrong. Please try again!'
@@ -48,7 +49,7 @@ const Home: NextPage = () => {
     }).finally(() => {
       setIsLoading(false)
     })
-  }
+  }, [DEFAULT_FORM, form.org, form.repo, page])
 
   const validate = () => {
     const errors = {
@@ -74,6 +75,29 @@ const Home: NextPage = () => {
       [e.target.name]: e.target.value
     })
   }
+
+  useEffect(() => {
+    function handleScroll() {
+      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+      if (scrollTop + clientHeight >= scrollHeight - 20 && !isLoading) {
+        setIsLoading(true)
+        setPage(prevPage => prevPage + 1)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (page !== 1) {
+      getIssues(false);
+    }
+  }, [getIssues, page]);
 
   return <div className={'wrapper'}>
     <form onSubmit={submit} className={'form-wrapper'}>
