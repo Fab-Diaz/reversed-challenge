@@ -15,11 +15,8 @@ const Home: NextPage = () => {
 
   const { apiError, fetchData } = useFetch();
 
-  const getIssues = useCallback(async (form: FormType, clear: boolean = true) => {
+  const getIssues = useCallback(async (form: FormType, page: number, clear: boolean = false) => {
     setIsLoading(true)
-    if (clear) {
-      setIssues([])
-    }
 
     const errors: ApiError[] = [
       {
@@ -36,13 +33,17 @@ const Home: NextPage = () => {
       .then(async (res) => {
         if (res) {
           setSavedForm(form)
-          setIssues(prevIssues => [...prevIssues, ...res])
+          if (clear) {
+            setIssues(res)
+          } else {
+            setIssues(prevIssues => [...prevIssues, ...res])
+          }
         }
       })
       .finally(() => {
         setIsLoading(false)
       })
-  }, [fetchData, page])
+  }, [fetchData])
 
 
   useEffect(() => {
@@ -62,18 +63,23 @@ const Home: NextPage = () => {
     };
   }, [isLoading]);
 
+  const submit = (form: FormType) => {
+    setPage(1)
+    getIssues(form, 1, true)
+  }
+
   useEffect(() => {
     if (page !== 1 && savedForm) {
-      getIssues(savedForm, false);
+      getIssues(savedForm, page);
     }
   }, [getIssues, page, savedForm]);
 
   return <div className={'wrapper'}>
-    <Form isLoading={isLoading} apiError={apiError} onSubmit={getIssues} />
+    <Form isLoading={isLoading} apiError={apiError} onSubmit={submit} />
     <div>
       {
         issues.map((issue: Issue, index) =>
-          <IssueCard key={issue.title} issue={issue} index={index} pageSize={savedForm?.pageSize ?? 15}/>
+          <IssueCard key={issue.html_url} issue={issue} index={index} pageSize={savedForm?.pageSize ?? 15}/>
         )
       }
     </div>
