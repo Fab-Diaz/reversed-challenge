@@ -24,6 +24,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - Pushed project to Netlify
   https://bejewelled-frangipane-22bf42.netlify.app/
 
+### 04:05 - 04:24
+
+- Improved responsiveness
+
+And that's all, folks!
+
 ## Getting Started
 
 First, run the development server:

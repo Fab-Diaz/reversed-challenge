@@ -7,9 +7,21 @@
 }
 
 .body {
-    @apply my-6
+    @apply my-6 break-words
 }
 
 .body.missing {
     @apply text-gray-400 italic
+}
+
+@media only screen and (max-width: 1224px) {
+    .card {
+        @apply w-[1000px]
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .card {
+        @apply w-[500px]
+    }
 }

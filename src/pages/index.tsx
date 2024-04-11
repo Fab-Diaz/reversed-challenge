@@ -50,7 +50,7 @@ const Home: NextPage = () => {
     function handleScroll() {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
-      if (scrollTop + clientHeight >= scrollHeight - 20 && !isLoading) {
+      if (scrollTop + clientHeight >= scrollHeight - 400 && !isLoading) {
         setIsLoading(true)
         setPage(prevPage => prevPage + 1)
       }

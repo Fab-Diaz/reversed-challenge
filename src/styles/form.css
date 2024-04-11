@@ -15,14 +15,11 @@
   @apply w-fit
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 1224px) {
   .form-wrapper {
     @apply w-full
   }
   .wrapper {
-    @apply w-fit p-8 flex flex-col justify-start items-center space-y-8
-  }
-  .content-wrapper {
-    @apply w-full
+    @apply w-fit p-8 flex flex-col justify-start space-y-8 space-x-0
   }
 }
