@@ -6,6 +6,23 @@
   @apply p-8 flex justify-center items-start space-x-8
 }
 
+
 .row {
   @apply flex space-x-2 w-full
+}
+
+.content-wrapper {
+  @apply w-fit
+}
+
+@media only screen and (max-width: 767px) {
+  .form-wrapper {
+    @apply w-full
+  }
+  .wrapper {
+    @apply w-fit p-8 flex flex-col justify-start items-center space-y-8
+  }
+  .content-wrapper {
+    @apply w-full
+  }
 }

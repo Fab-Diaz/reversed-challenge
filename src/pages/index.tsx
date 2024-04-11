@@ -76,7 +76,7 @@ const Home: NextPage = () => {
 
   return <div className={'wrapper'}>
     <Form isLoading={isLoading} apiError={apiError} onSubmit={submit} />
-    <div>
+    <div className={'content-wrapper'}>
       {
         issues.map((issue: Issue, index) =>
           <IssueCard key={issue.html_url} issue={issue} index={index} pageSize={savedForm?.pageSize ?? 15}/>

@@ -13,7 +13,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 #### Paused for ~2h
 
-### 02:27 - 
+### 02:27 - 04:00
+
+- Fixed some form & fetch issues
+- Improved overall architecture
+- Added light responsiveness
+
+### 04:00 - ?
+
+- Pushed project to Netlify
 
 ## Getting Started
 
