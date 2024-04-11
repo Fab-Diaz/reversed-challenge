@@ -1,0 +1,38 @@
+.card {
+    @apply w-[1000px] h-fit bg-white text-black mb-4 p-4 shadow-lg rounded-lg
+}
+
+.title-wrapper {
+    @apply flex space-x-2 items-center
+}
+
+.title {
+    @apply font-bold text-lg
+}
+
+.body {
+    @apply my-6
+}
+
+.body.missing {
+    @apply text-gray-400 italic
+}
+
+.avatar {
+    @apply w-[30px] h-[30px] rounded-3xl
+}
+
+.comment {
+    @apply bg-gray-100 p-2 rounded-md
+}
+.sub-text {
+    @apply text-xs text-gray-600
+}
+
+.chip {
+    @apply py-1 px-2 rounded-3xl bg-gray-300 text-black text-sm
+}
+
+.sub-content-wrapper {
+    @apply flex justify-between items-center
+}

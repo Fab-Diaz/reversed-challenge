@@ -1,6 +1,7 @@
 import {NextPage} from "next";
 import {useEffect, useState} from "react";
 import Issue from "@/types/issues";
+import IssueCard from "@/components/IssueCard";
 
 const Home: NextPage = () => {
   const [issues, setIssues] = useState<Issue[]>([])
@@ -11,7 +12,6 @@ const Home: NextPage = () => {
         const newIssues = await res.json()
 
         setIssues(prevIssues => [...prevIssues, ...newIssues])
-        console.log(newIssues)
     }).catch((e) => {
       console.error(e)
     })
@@ -21,6 +21,11 @@ const Home: NextPage = () => {
     getIssues()
   }, [])
   return <div>
+    {
+      issues.map((issue: Issue) =>
+        <IssueCard key={issue.title} issue={issue}/>
+      )
+    }
   </div>
 }
 
