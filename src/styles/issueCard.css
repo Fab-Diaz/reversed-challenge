@@ -6,10 +6,6 @@
     @apply flex space-x-2 items-center
 }
 
-.title {
-    @apply font-bold text-lg
-}
-
 .body {
     @apply my-6
 }
@@ -24,9 +20,6 @@
 
 .comment {
     @apply bg-gray-100 p-2 rounded-md
-}
-.sub-text {
-    @apply text-xs text-gray-600
 }
 
 .chip {

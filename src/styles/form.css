@@ -1,0 +1,7 @@
+.form-wrapper {
+  @apply flex flex-col space-y-2 w-[500px] rounded-md p-4 bg-white
+}
+
+.wrapper {
+  @apply p-8 flex justify-center items-start space-x-8
+}

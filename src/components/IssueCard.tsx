@@ -16,7 +16,7 @@ const IssueCard: React.FC<IssueCardProps> = React.memo(({issue}) => {
           <img src={avatar_url} alt={avatar_url} className={'avatar'}/>
         </a>
         <a href={html_url} target={"_blank"}>
-          <h1 className={'title'}>{title}</h1>
+          <h1>{title}</h1>
         </a>
         <div className={'chip'}>{state}</div>
         {locked && <div className={'chip'}>Locked</div>}
