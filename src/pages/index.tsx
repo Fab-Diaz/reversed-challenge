@@ -9,6 +9,7 @@ const Home: NextPage = () => {
     org: '',
     repo: '',
     sort: 'created',
+    pageSize: 15,
   }), [])
 
   const [issues, setIssues] = useState<Issue[]>([])
@@ -24,7 +25,7 @@ const Home: NextPage = () => {
     if (clear) {
       setIssues([])
     }
-    fetch(`${process.env.apiUrl}/${form.org}/${form.repo}/issues?page=${page}&sort=${form.sort}`,
+    fetch(`${process.env.apiUrl}/${form.org}/${form.repo}/issues?page=${page}&sort=${form.sort}&per_page=${form.pageSize}`,
       {headers: {'Authorization': `Bearer ${process.env.apiKey}`}}
     ).then(async (res) => {
 
@@ -48,7 +49,7 @@ const Home: NextPage = () => {
     }).finally(() => {
       setIsLoading(false)
     })
-  }, [DEFAULT_FORM, form.org, form.repo, form.sort, page])
+  }, [DEFAULT_FORM, form, page])
 
   const validate = () => {
     const errors = {
@@ -104,16 +105,33 @@ const Home: NextPage = () => {
       <h1>Reversed Issue Finder</h1>
       <p className={'sub-text'}>Search all issues related to a github repository in just a few clicks!</p>
       </div>
+      <p>Organization</p>
       <input type="text" id="org" name="org" value={form.org} onChange={handleFormChange} placeholder={"Select an organization"}/>
       <p className={'text-red-600'}>{errors.org}</p>
+      <p>Repository</p>
       <input type="text" id="repo" name="repo" value={form.repo} onChange={handleFormChange} placeholder={"Select a repository"}/>
       <p className={'text-red-600'}>{errors.repo}</p>
 
-      <select name="sort" id="sort" onChange={handleFormChange}>
-        <option value="created">Created</option>
-        <option value="upated">Updated</option>
-        <option value="comments">Comments</option>
-      </select>
+      <div className={'row'}>
+        <div className={'w-full'}>
+          <p>Sort by</p>
+          <select name="sort" id="sort" onChange={handleFormChange} value={form.sort} className={'w-full'}>
+            <option value="created">Created</option>
+            <option value="upated">Updated</option>
+            <option value="comments">Comments</option>
+          </select>
+        </div>
+        <div className={'w-[150px]'}>
+          <p>Page size</p>
+          <select name="pageSize" id="pageSize" onChange={handleFormChange} value={form.pageSize} className={'w-full'}>
+            <option value="5">5</option >
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+      </div>
       <button type="submit" className={`button-primary ${isLoading ? 'disabled' : ''}`}>
         {isLoading ? 'Loading..' : 'Search issues!'}
       </button>
@@ -121,8 +139,8 @@ const Home: NextPage = () => {
     </form>
     <div>
       {
-        issues.map((issue: Issue) =>
-          <IssueCard key={issue.title} issue={issue}/>
+        issues.map((issue: Issue, index) =>
+          <IssueCard key={issue.title} issue={issue} index={index} pageSize={form.pageSize}/>
         )
       }
     </div>

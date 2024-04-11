@@ -3,14 +3,26 @@ import Issue from "@/types/issues";
 
 type IssueCardProps = {
   issue: Issue
+  index: number,
+  pageSize: number,
 }
 
-const IssueCard: React.FC<IssueCardProps> = React.memo(({issue}) => {
+const IssueCard: React.FC<IssueCardProps> = React.memo(({issue, index, pageSize}) => {
   const {title, body, user, comments, created_at, updated_at, html_url, state, locked} = issue
   const {avatar_url, html_url: user_html_url} = user
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Trigger fade-in animation after component mounts
+    setTimeout(() => {
+      setIsVisible(true);
+
+    }, 100 * (index % pageSize))
+  }, [index, pageSize]);
+
   return (
-    <div className={`card`}>
+    <div className={`card ${isVisible ? 'fade-in' : ''}`}>
       <div className='title-wrapper'>
         <a href={user_html_url} target={"_blank"}>
           <img src={avatar_url} alt={avatar_url} className={'avatar'}/>

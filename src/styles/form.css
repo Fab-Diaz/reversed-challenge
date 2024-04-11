@@ -5,3 +5,7 @@
 .wrapper {
   @apply p-8 flex justify-center items-start space-x-8
 }
+
+.row {
+  @apply flex space-x-2 w-full
+}

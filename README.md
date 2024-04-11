@@ -2,9 +2,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Roadmap
 
-### 00:00 - ?
+### 00:00 - 02:27
 - Setup
-- Fetch issues
+- Fetch & display issues
+- Styled issue card
+- Form and validation
+- Extra form input (sort & page size)
+- Load more issues when scrolling down
+- Card animation
+#### Paused for ?
 
 ## Getting Started
 

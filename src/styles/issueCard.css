@@ -1,5 +1,9 @@
 .card {
-    @apply w-[1000px] h-fit bg-white text-black mb-4 p-4 shadow-lg rounded-lg
+    @apply w-[1000px] h-fit bg-white text-black mb-4 p-4 shadow-lg rounded-lg opacity-0 transition duration-1000 ease-in-out
+}
+
+.card.fade-in {
+    @apply opacity-100
 }
 
 .title-wrapper {
