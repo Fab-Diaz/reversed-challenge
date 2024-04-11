@@ -10,7 +10,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - Extra form input (sort & page size)
 - Load more issues when scrolling down
 - Card animation
-#### Paused for ?
+
+#### Paused for ~2h
+
+### 02:27 - 
 
 ## Getting Started
 
