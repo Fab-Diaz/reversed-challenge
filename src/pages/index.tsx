@@ -2,20 +2,18 @@ import {NextPage} from "next";
 import {ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState} from "react";
 import Issue from "@/types/issues";
 import IssueCard from "@/components/IssueCard";
-import {Form, FormErrors} from "@/types/form";
+import {Form, FormErrors, Sort} from "@/types/form";
 
 const Home: NextPage = () => {
-  const DEFAULT_FORM = useMemo(() => ({
+  const DEFAULT_FORM: Form = useMemo(() => ({
     org: '',
     repo: '',
+    sort: 'created',
   }), [])
 
   const [issues, setIssues] = useState<Issue[]>([])
   const [page, setPage] = useState<number>(1)
-  const [form, setForm] = useState<Form>({
-    org: 'vercel',
-    repo: 'next.js',
-  })
+  const [form, setForm] = useState<Form>(DEFAULT_FORM)
   const [errors, setErrors] = useState<FormErrors>({
     ...DEFAULT_FORM,
     api: ''
@@ -26,7 +24,7 @@ const Home: NextPage = () => {
     if (clear) {
       setIssues([])
     }
-    fetch(`${process.env.apiUrl}/${form.org}/${form.repo}/issues?page=${page}`,
+    fetch(`${process.env.apiUrl}/${form.org}/${form.repo}/issues?page=${page}&sort=${form.sort}`,
       {headers: {'Authorization': `Bearer ${process.env.apiKey}`}}
     ).then(async (res) => {
 
@@ -42,6 +40,7 @@ const Home: NextPage = () => {
         setIssues(prevIssues => [...prevIssues, ...newIssues])
       }
     }).catch((e) => {
+      console.error(e)
       setErrors({
         ...DEFAULT_FORM,
         api: 'Something went wrong. Please try again!'
@@ -49,7 +48,7 @@ const Home: NextPage = () => {
     }).finally(() => {
       setIsLoading(false)
     })
-  }, [DEFAULT_FORM, form.org, form.repo, page])
+  }, [DEFAULT_FORM, form.org, form.repo, form.sort, page])
 
   const validate = () => {
     const errors = {
@@ -68,7 +67,7 @@ const Home: NextPage = () => {
     }
   }
 
-  const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFormChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     e.preventDefault()
     setForm({
       ...form,
@@ -110,6 +109,11 @@ const Home: NextPage = () => {
       <input type="text" id="repo" name="repo" value={form.repo} onChange={handleFormChange} placeholder={"Select a repository"}/>
       <p className={'text-red-600'}>{errors.repo}</p>
 
+      <select name="sort" id="sort" onChange={handleFormChange}>
+        <option value="created">Created</option>
+        <option value="upated">Updated</option>
+        <option value="comments">Comments</option>
+      </select>
       <button type="submit" className={`button-primary ${isLoading ? 'disabled' : ''}`}>
         {isLoading ? 'Loading..' : 'Search issues!'}
       </button>
