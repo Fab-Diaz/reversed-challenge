@@ -19,9 +19,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - Improved overall architecture
 - Added light responsiveness
 
-### 04:00 - ?
+### 04:00 - 04:05
 
 - Pushed project to Netlify
+  https://bejewelled-frangipane-22bf42.netlify.app/
 
 ## Getting Started
 
